@@ -1,0 +1,32 @@
+{
+  "name": "@kemero/credit",
+  "version": "1.0.0",
+  "description": "kemeros signatur för sajterna vi bygger. Samma ord, samma märke, samma plats, varje gång.",
+  "license": "UNLICENSED",
+  "private": true,
+  "type": "module",
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./style.css": "./dist/index.css"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "node scripts/build-mask.mjs && tsup && node scripts/postbuild.mjs"
+  },
+  "peerDependencies": {
+    "react": ">=19"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.0",
+    "tsup": "^8.5.0",
+    "typescript": "^5.9.0"
+  }
+}

@@ -1,0 +1,58 @@
+/*
+  Vanlig CSS, inga Tailwind-klasser.
+
+  Tailwind v4 skannar inte node_modules, så utility-klasser från ett paket skulle
+  aldrig genereras hos konsumenten: klasserna hamnar i DOM men matchar ingen regel
+  och komponenten kollapsar tyst. Därför äger paketet sin egen CSS.
+
+  {{MASK}} ersätts av scripts/build-mask.mjs. Redigera credit.template.css,
+  aldrig den genererade credit.css.
+*/
+
+.kemero-credit {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.kemero-credit__link {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 2px;
+  transition: opacity 150ms ease;
+}
+
+.kemero-credit__link:hover {
+  opacity: 0.7;
+}
+
+.kemero-credit__link:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 4px;
+}
+
+/*
+  Höjden är 12px, inte textens 14px: ordmärkets versalhöjd fyller nästan hela
+  filen och blir annars optiskt större än texten bredvid.
+
+  Färgen är currentColor, alltså footertextens färg där komponenten står.
+  Det är det enda som fungerar under VARJE temalösning: prefers-color-scheme,
+  klassbaserad switcher, data-theme, eller inget alls. light-dark() prövades
+  först men läser color-scheme, som klassbaserade switchers inte uppdaterar,
+  och då fastnar märket i fel färg. Är footertexten läsbar är märket läsbart.
+*/
+.kemero-credit__mark {
+  display: block;
+  flex-shrink: 0;
+  width: 73px;
+  height: 12px;
+  background-color: currentColor;
+  -webkit-mask: url("{{MASK}}") center / contain no-repeat;
+  mask: url("{{MASK}}") center / contain no-repeat;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kemero-credit__link {
+    transition: none;
+  }
+}
