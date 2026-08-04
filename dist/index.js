@@ -8,7 +8,7 @@ function KemeroCredit({ caseUrl, className }) {
     /* @__PURE__ */ jsx(
       "a",
       {
-        "aria-label": "kemero, se caset f\xF6r den h\xE4r sajten",
+        "aria-label": "kemero",
         className: "kemero-credit__link",
         href: caseUrl,
         rel: "noopener noreferrer",
