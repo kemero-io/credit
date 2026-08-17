@@ -32,8 +32,15 @@
 }
 
 /*
-  Höjden är 12px, inte textens 14px: ordmärkets versalhöjd fyller nästan hela
+  Höjden är 13px, inte textens 14px: ordmärkets versalhöjd fyller nästan hela
   filen och blir annars optiskt större än texten bredvid.
+
+  Rutan är 76x13 och inte 73x12 för att mark.svg fick luft. Ritningen låg förut
+  kant i kant med sin viewBox på alla fyra sidor, och en kontur som ligger på
+  gränsen halveras av kantutjämningen när masken rastreras i den här storleken:
+  kubernas topp och sista o:et i kemero såg avklippta ut i foten. Marginalen i
+  filen är 12 enheter, och rutan växer med samma andel så att ordmärket behåller
+  sin optiska storlek.
 
   Färgen är currentColor, alltså footertextens färg där komponenten står.
   Det är det enda som fungerar under VARJE temalösning: prefers-color-scheme,
@@ -44,8 +51,8 @@
 .kemero-credit__mark {
   display: block;
   flex-shrink: 0;
-  width: 73px;
-  height: 12px;
+  width: 76px;
+  height: 13px;
   background-color: currentColor;
   -webkit-mask: url("{{MASK}}") center / contain no-repeat;
   mask: url("{{MASK}}") center / contain no-repeat;
