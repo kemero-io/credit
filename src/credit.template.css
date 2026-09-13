@@ -11,13 +11,12 @@
 
 .kemero-credit {
   display: inline-flex;
-  align-items: center;
-  gap: 4px;
+  align-items: baseline;
+  gap: 0.3em;
 }
 
 .kemero-credit__link {
   display: inline-flex;
-  align-items: center;
   border-radius: 2px;
   transition: opacity 150ms ease;
 }
@@ -32,26 +31,40 @@
 }
 
 /*
-  Höjden är 13px, inte textens 14px: ordmärkets versalhöjd fyller nästan hela
-  filen och blir annars optiskt större än texten bredvid.
+  MÄRKET STÅR PÅ TEXTENS BASLINJE OCH VÄXER MED TEXTEN.
 
-  Rutan är 53x13 sedan 2026-09-13, när märket byttes till det nya ordmärket
-  ur ~/Code/kemero/logo/export/svg/kemero-ordmarke-ink.svg. Det gamla var ett
-  bredare märke med kuber framför ordet. mark.svg har fyra enheters luft runt
-  ritningen, så att kantutjämningen inte halverar konturen i den här
-  storleken, och rutan följer filens proportion.
+  Fram till 2026-09-13 var rutan 53x13 pixlar och centrerad mot "Sajt av".
+  Ordmärket har bara ett högt tecken, k:et, och resten är gemener, så en
+  centrerad ruta satte ordets baslinje under textens och märket såg ut att
+  sjunka. I 13 pixlar blev dessutom gemenerna tunnare än texten bredvid, och
+  märket läste otydligt.
+
+  Nu linjerar raden på baslinjen (align-items: baseline). En flexruta utan
+  egen text får sin baslinje i underkanten, alltså skulle rutans underkant
+  hamna på textens baslinje. Ritningen har 5,4 av filens 79,4 enheter luft
+  under sin baslinje, se viewBox i mark.svg, och `top` flyttar ned rutan
+  exakt den andelen av höjden så att ordets baslinje och textens sammanfaller.
+  `top` på en relativt placerad ruta flyttar bara ritningen, inte raden.
+
+  Höjden är 1.05em, så att k:et står ungefär en femtedel högre än textens
+  versaler. Märket lyfts ur raden utan att ta över den. Bredden följer
+  filens proportion, 325,53 mot 79,4.
+
+  Allt i em, så märket följer foten om en sajt kör 13 eller 16 pixlar.
 
   Färgen är currentColor, alltså footertextens färg där komponenten står.
   Det är det enda som fungerar under VARJE temalösning: prefers-color-scheme,
-  klassbaserad switcher, data-theme, eller inget alls. light-dark() prövades
-  först men läser color-scheme, som klassbaserade switchers inte uppdaterar,
-  och då fastnar märket i fel färg. Är footertexten läsbar är märket läsbart.
+  klassbaserad switcher, data-theme, eller inget alls. Är footertexten läsbar
+  är märket läsbart.
 */
 .kemero-credit__mark {
+  --kemero-credit-h: 1.05em;
+  position: relative;
+  top: calc(var(--kemero-credit-h) * 5.4 / 79.4);
   display: block;
   flex-shrink: 0;
-  width: 53px;
-  height: 13px;
+  width: calc(var(--kemero-credit-h) * 325.53 / 79.4);
+  height: var(--kemero-credit-h);
   background-color: currentColor;
   -webkit-mask: url("{{MASK}}") center / contain no-repeat;
   mask: url("{{MASK}}") center / contain no-repeat;
